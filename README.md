@@ -1,1 +1,1 @@
-# dequizz-the-bomb
+# dequizz the bomb
