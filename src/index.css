@@ -2,7 +2,8 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  --bg-color: white;
+  --bg-color: #ccc;
+  --main-border: #504e4d;
 }
 
 *,
@@ -46,8 +47,138 @@ html {
 
 body {
   background-color: var(--bg-color);
+  min-height: 100svh;
+  padding-top: 1em;
+}
+
+#root {
   display: flex;
-  height: 100svh;
+  width: min(468px, 100vw - 2rem);
+  border: 4px solid var(--main-border);
+  margin: 0 auto;
+  text-align: center;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: calc(100vh - 2rem);
+}
+
+.title {
+  background-color: #706d6c;
+  color: white;
+  padding-block: 0.5em;
+  border: 2px solid var(--main-border);
+}
+
+.bomb {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bomb > * {
+  padding-block: 2rem;
+}
+
+.timer {
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 0.5em 2em;
+}
+
+.timer .progress-wrapper {
+  position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.timer progress {
+  appearance: none;
+  display: flex;
+  min-width: 100px;
+  block-size: 80px;
+  inline-size: 100%;
+  background-color: transparent;
+}
+
+.timer .time-remaining {
+  position: absolute;
+  font-weight: bold;
+  line-height: 2rem;
+  font-size: clamp(0.8rem, 3vw + 1rem, 2.8rem);
+}
+
+::-webkit-progress-bar {
+  background-color: red;
+}
+
+::-webkit-progress-value {
+  background-color: yellow;
+}
+
+.question {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: yellow;
+  border: 3px solid var(--main-border);
+}
+
+.initial-screen {
+  display: flex;
+  flex-direction: column;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.question p {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 40ch;
+  font-weight: bolder;
+  line-height: 1.5rem;
+}
+
+.answers-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  color: whitesmoke;
+  background-color: transparent;
+  padding-top: 0;
+  background-color: #272321;
+}
+
+.answers {
+  background-color: #504e4d;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  gap: 1em;
+  height: fit-content;
+  width: 400px;
+}
+
+.answers button {
+  color: whitesmoke;
+  background-color: #616060;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  width: 100%;
+  min-height: 30px;
+}
+
+button.correct {
+  background-color: green;
+  opacity: 0.8;
+}
+button.incorrect {
+  background-color: red;
+  opacity: 0.8;
+}
+
+.answers button:hover {
+  background-color: #272321;
 }
