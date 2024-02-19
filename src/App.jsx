@@ -1,7 +1,4 @@
 import Bomb from "./components/Bomb";
-import questions from "./utils/questions";
-
-console.log(questions);
 
 function App() {
   return (

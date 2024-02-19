@@ -83,3 +83,12 @@ export default questions;
 function generateUniqueID() {
   return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 }
+
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomQuestion(list, min = 1, max) {
+  let index = randomInteger(min, max);
+  return list[index];
+}
