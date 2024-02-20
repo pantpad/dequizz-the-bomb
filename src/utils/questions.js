@@ -76,6 +76,18 @@ const questions = [
     answers: ["JUNE", "MAY", "JULY", "MARCH"],
     correctAnswer: 3,
   },
+  {
+    id: generateUniqueID(),
+    question: "IN WHAT YEAR DID CSGO GET RELEASED?",
+    answers: ["2009", "2012", "2011", "2010"],
+    correctAnswer: 1,
+  },
+  {
+    id: generateUniqueID(),
+    question: "IN WHAT COUNTRY DOES DUST2 TAKE PLACE?",
+    answers: ["MOROCCO", "PAKISTAN", "EGYPT", "SAUDI ARABIA"],
+    correctAnswer: 0,
+  },
 ];
 
 export default questions;
