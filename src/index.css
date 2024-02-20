@@ -169,10 +169,11 @@ body {
   min-height: 30px;
 }
 
-button.correct {
-  background-color: green;
+button.selected {
+  background-color: yellow;
   opacity: 0.8;
 }
+
 button.incorrect {
   background-color: red;
   opacity: 0.8;

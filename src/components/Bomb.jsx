@@ -87,7 +87,18 @@ export default function Bomb() {
               handleStart={handleStart}
             />
             <BombTimer />
-            <BombAnswers addQuestion={addQuestion} endGame={endGame} />
+            <BombAnswers
+              gameStatus={bombState.status}
+              answers={
+                bombState.questions[bombState.questions.length - 1]?.answers
+              }
+              addQuestion={addQuestion}
+              endGame={endGame}
+              correctAnswer={
+                bombState.questions[bombState.questions.length - 1]
+                  ?.correctAnswer
+              }
+            />
           </>
         ) : (
           <>
