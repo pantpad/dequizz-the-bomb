@@ -104,12 +104,30 @@ export default function Bomb() {
           <>
             <h2>You Won / Lost :D :/</h2>
             <section className="summary">
-              <article className="question">
-                <div className="question-description">aosidhasidu</div>
-                <p className="question-answer correct">correct</p>
-                <p className="question-answer incorrect">incorrect</p>
-                <p className="question-answer skipped">no-answer</p>
-              </article>
+              {bombState.questions.map((question, index) => {
+                return (
+                  <article key={index} className="question">
+                    <div className="question-description">
+                      {question.question}
+                    </div>
+                    <p
+                      className={`question-answer ${
+                        bombState.choiches[index] !== undefined
+                          ? question.correctAnswer === bombState.choiches[index]
+                            ? "correct"
+                            : "incorrect"
+                          : "skipped"
+                      }`}
+                    >
+                      {question.answers[bombState.choiches[index]] ||
+                        "No Answer"}
+                    </p>
+                    {/* <p className="question-answer correct">correct</p>
+                    <p className="question-answer incorrect">incorrect</p>
+                    <p className="question-answer skipped">no-answer</p> */}
+                  </article>
+                );
+              })}
             </section>
           </>
         )}

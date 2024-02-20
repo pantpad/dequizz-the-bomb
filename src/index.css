@@ -67,6 +67,7 @@ body {
   color: white;
   padding-block: 0.5em;
   border: 2px solid var(--main-border);
+  letter-spacing: 1vw;
 }
 
 .bomb {
@@ -194,13 +195,32 @@ body {
 }
 
 /* gameover */
+
+.summary {
+  padding: 1em;
+}
+
 .summary .question {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--main-border);
+  background-color: transparent;
 }
 
 .summary .question-description {
 }
 
-.summary .question-answers {
-}
 .summary .question-answer {
+}
+
+.summary .question-answer.correct {
+  color: green;
+}
+
+.summary .question-answer.incorrect {
+  color: red;
+}
+
+.summary .question-answer.skipped {
+  color: aliceblue;
 }
