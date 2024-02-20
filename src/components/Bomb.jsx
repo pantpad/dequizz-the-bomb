@@ -18,15 +18,6 @@ export default function Bomb() {
 
   const hasWon = bombState.timer >= 75000 ? true : false;
 
-  useEffect(() => {
-    if (bombState.timer > 75000) {
-      endGame();
-    }
-    if (bombState.timer < -1) {
-      endGame();
-    }
-  }, [bombState.timer]);
-
   function handleStart() {
     const firstQuestion = getRandomQuestion(questions, 1, questions.length);
     remainingQuestions = questions.filter(
@@ -37,7 +28,7 @@ export default function Bomb() {
         questions: [firstQuestion],
         choiches: [],
         status: "running",
-        timer: 45000,
+        timer: 74000,
       };
     });
   }
@@ -46,7 +37,6 @@ export default function Bomb() {
     setBombState((prevState) => {
       return {
         ...prevState,
-        choiches: [...prevState.choiches, undefined],
         status: "game-over",
       };
     });
@@ -85,6 +75,12 @@ export default function Bomb() {
     });
   }
 
+  function addChoice(index) {
+    setBombState((prevState) => {
+      return { ...prevState, choiches: [...prevState.choiches, index] };
+    });
+  }
+
   function setGameCondition(condition) {
     setBombState((prevState) => {
       return { ...prevState, status: condition };
@@ -116,14 +112,17 @@ export default function Bomb() {
               isStarted={bombState.status}
               handleStart={handleStart}
             />
-            <BombTimer {...bombState} removeTime={handleRemoveTime} />
+            <BombTimer
+              {...bombState}
+              removeTime={handleRemoveTime}
+              endGame={endGame}
+            />
             <BombAnswers
               gameStatus={bombState.status}
               answers={
                 bombState.questions[bombState.questions.length - 1]?.answers
               }
               addQuestion={addQuestion}
-              endGame={endGame}
               correctAnswer={
                 bombState.questions[bombState.questions.length - 1]
                   ?.correctAnswer
@@ -131,6 +130,7 @@ export default function Bomb() {
               addTime={handleAddTime}
               removeTime={handleRemoveTime}
               time={bombState.timer}
+              addChoice={addChoice}
             />
           </>
         ) : (
@@ -155,9 +155,6 @@ export default function Bomb() {
                       {question.answers[bombState.choiches[index]] ||
                         "No Answer"}
                     </p>
-                    {/* <p className="question-answer correct">correct</p>
-                    <p className="question-answer incorrect">incorrect</p>
-                    <p className="question-answer skipped">no-answer</p> */}
                   </article>
                 );
               })}

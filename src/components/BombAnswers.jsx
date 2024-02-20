@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 export default function BombAnswers({
   answers = ["", "", "", ""],
   addQuestion,
-  endGame,
   correctAnswer = undefined,
   gameStatus,
   addTime,
   removeTime,
-  time,
 }) {
   const [answerSelection, setAnswerSelection] = useState({
     isChecking: false,
@@ -17,27 +15,18 @@ export default function BombAnswers({
     currentAnswer: "",
   });
 
-  useEffect(() => {
-    console.log("checked");
-  }, [answerSelection.checked]);
-
   function handleAnswerSelection(index) {
     setAnswerSelection((prevState) => {
       return { ...prevState, isChecking: true, currentAnswer: index };
     });
-    const correctTimer = setTimeout(() => {
+    setTimeout(() => {
       showCorrectAnswer();
       handlePoints(index);
-      console.log(time);
-      if (time - 5000 <= 0 || time + 15000 >= 75000) {
-        clearTimeout(correctTimer);
-      } else {
-        setTimeout(() => {
-          clearState();
-          addQuestion(index);
-        }, 500);
-      }
     }, 500);
+    setTimeout(() => {
+      clearState();
+      addQuestion(index);
+    }, 1000);
   }
 
   function showCorrectAnswer() {
@@ -100,7 +89,6 @@ export default function BombAnswers({
               </button>
             );
           })}
-          <button onClick={endGame}>EndGame</button>
         </div>
       </section>
     </>
