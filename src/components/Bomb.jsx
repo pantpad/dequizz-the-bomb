@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import BombTimer from "./BombTimer";
 import BombScreen from "./BombScreen";
@@ -28,7 +28,7 @@ export default function Bomb() {
         questions: [firstQuestion],
         choiches: [],
         status: "running",
-        timer: 74000,
+        timer: 4000,
       };
     });
   }
@@ -67,6 +67,14 @@ export default function Bomb() {
     );
 
     setBombState((prevState) => {
+      console.log(prevState.timer);
+      if (prevState.timer >= 75000 || prevState.timer <= 0) {
+        return {
+          ...prevState,
+          choiches: [...prevState.choiches, index],
+          questions: [...prevState.questions],
+        };
+      }
       return {
         ...prevState,
         choiches: [...prevState.choiches, index],

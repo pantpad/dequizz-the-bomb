@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /* eslint-disable react/prop-types */
 export default function BombAnswers({
