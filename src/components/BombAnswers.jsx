@@ -26,7 +26,7 @@ export default function BombAnswers({
     setTimeout(() => {
       clearState();
       addQuestion(index);
-    }, 2000);
+    }, 1700);
   }
 
   function showCorrectAnswer() {
