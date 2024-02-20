@@ -16,6 +16,8 @@ export default function Bomb() {
     timer: 2000,
   });
 
+  const hasWon = bombState.timer >= 75000 ? true : false;
+
   useEffect(() => {
     if (bombState.timer > 75000) {
       endGame();
@@ -35,7 +37,7 @@ export default function Bomb() {
         questions: [firstQuestion],
         choiches: [],
         status: "running",
-        timer: 2000,
+        timer: 45000,
       };
     });
   }
@@ -51,10 +53,6 @@ export default function Bomb() {
   }
 
   function addQuestion(index) {
-    //go to game over page -> status: 'game over'
-    console.log("sono entrato in add");
-    console.log(bombState);
-
     if (remainingQuestions.length == 0) {
       setGameCondition(undefined);
     }
@@ -104,6 +102,8 @@ export default function Bomb() {
     });
   }
 
+  console.log(bombState);
+
   return (
     <>
       <main className="bomb">
@@ -130,11 +130,12 @@ export default function Bomb() {
               }
               addTime={handleAddTime}
               removeTime={handleRemoveTime}
+              time={bombState.timer}
             />
           </>
         ) : (
           <>
-            <h2>You Won / Lost :D :/</h2>
+            <h2>You {hasWon ? "WON :D" : "LOST :("}</h2>
             <section className="summary">
               {bombState.questions.map((question, index) => {
                 return (
