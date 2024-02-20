@@ -31,7 +31,7 @@ export default function Bomb() {
       return {
         ...prevState,
         choiches: [...prevState.choiches, undefined],
-        status: undefined,
+        status: "game-over",
       };
     });
   }

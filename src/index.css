@@ -169,12 +169,22 @@ body {
   min-height: 30px;
 }
 
-button.selected {
+.answers button.selected {
   background-color: yellow;
   opacity: 0.8;
 }
 
-button.incorrect {
+.answers button.selected:hover {
+  background-color: yellow;
+  opacity: 0.8;
+}
+
+.answers button.incorrect {
+  background-color: red;
+  opacity: 0.8;
+}
+
+.answers button.incorrect:hover {
   background-color: red;
   opacity: 0.8;
 }

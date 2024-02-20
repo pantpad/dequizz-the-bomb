@@ -20,6 +20,13 @@ export default function BombAnswers({
     setAnswerSelection((prevState) => {
       return { ...prevState, isChecking: true, currentAnswer: index };
     });
+    setTimeout(() => {
+      showCorrectAnswer();
+    }, 1000);
+    setTimeout(() => {
+      clearState();
+      addQuestion(index);
+    }, 2000);
   }
 
   function showCorrectAnswer() {
@@ -30,6 +37,23 @@ export default function BombAnswers({
 
   function clearState() {
     setAnswerSelection({});
+  }
+
+  function getConditionalClass(index) {
+    let conditionalClass = answerSelection.isChecking
+      ? index === answerSelection.currentAnswer
+        ? !answerSelection.checked
+          ? "selected"
+          : index === correctAnswer
+          ? "selected"
+          : "incorrect"
+        : index === correctAnswer
+        ? answerSelection.checked
+          ? "selected"
+          : null
+        : null
+      : null;
+    return conditionalClass;
   }
 
   //controllo se ho selezionato
@@ -46,36 +70,11 @@ export default function BombAnswers({
             }
             return (
               <button
-                className={
-                  answerSelection.isChecking
-                    ? index === answerSelection.currentAnswer
-                      ? !answerSelection.checked
-                        ? "selected"
-                        : index === correctAnswer
-                        ? "selected"
-                        : "incorrect"
-                      : index === correctAnswer
-                      ? answerSelection.checked
-                        ? "selected"
-                        : null
-                      : null
-                    : null
-                }
+                className={getConditionalClass(index)}
                 disabled={answerSelection.isChecking}
                 key={index}
                 onClick={() => {
                   handleAnswerSelection(index);
-                  setTimeout(() => {
-                    showCorrectAnswer();
-                  }, 1000);
-                  //quello selezionato diventa giallo
-                  //quello giusto diventa giallo
-                  //se quello selezionato e' diverso da quello giusto diventa rosso
-                  //aggiungo domanda
-                  setTimeout(() => {
-                    clearState();
-                    addQuestion(index);
-                  }, 2000);
                 }}
               >
                 {answer}
