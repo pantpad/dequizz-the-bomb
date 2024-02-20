@@ -15,11 +15,11 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
     return () => {
       clearInterval(timerI);
     };
-  }, [timer]);
+  }, [timer, removeTime, endGame]);
   return (
     <>
       <progress value={timer} max={max} />
-      <p className="time-remaining">{timer}</p>
+      <p className="time-remaining">{timer / 1000}</p>
     </>
   );
 }

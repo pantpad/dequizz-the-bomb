@@ -8,7 +8,7 @@ export default function BombTimer({ status, timer, removeTime, endGame }) {
   let timerSection = (
     <>
       <progress value={60} max={100} />
-      <p className="time-remaining">00:45:00</p>
+      <p className="time-remaining">45</p>
     </>
   );
 

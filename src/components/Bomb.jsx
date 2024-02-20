@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import BombTimer from "./BombTimer";
 import BombScreen from "./BombScreen";
@@ -8,13 +8,15 @@ import questions, { getRandomQuestion } from "../utils/questions";
 
 let remainingQuestions;
 
+const startingState = {
+  questions: [],
+  choiches: [],
+  status: undefined,
+  timer: 45000,
+};
+
 export default function Bomb() {
-  const [bombState, setBombState] = useState({
-    questions: [],
-    choiches: [],
-    status: undefined,
-    timer: 2000,
-  });
+  const [bombState, setBombState] = useState(startingState);
 
   const hasWon = bombState.timer >= 75000 ? true : false;
 
@@ -23,23 +25,26 @@ export default function Bomb() {
     remainingQuestions = questions.filter(
       (question) => question.id != firstQuestion.id
     );
-    setBombState(() => {
+    setBombState((prevState) => {
       return {
+        ...prevState,
         questions: [firstQuestion],
-        choiches: [],
         status: "running",
-        timer: 4000,
       };
     });
   }
 
-  function endGame() {
+  const endGame = useCallback(function endGame() {
     setBombState((prevState) => {
       return {
         ...prevState,
         status: "game-over",
       };
     });
+  }, []);
+
+  function resetGame() {
+    setBombState(startingState);
   }
 
   function addQuestion(index) {
@@ -100,11 +105,11 @@ export default function Bomb() {
       return { ...prevState, timer: prevState.timer + value };
     });
   }
-  function handleRemoveTime(value) {
+  const handleRemoveTime = useCallback(function handleRemoveTime(value) {
     setBombState((prevState) => {
       return { ...prevState, timer: prevState.timer - value };
     });
-  }
+  }, []);
 
   console.log(bombState);
 
@@ -166,6 +171,9 @@ export default function Bomb() {
                   </article>
                 );
               })}
+              <button onClick={resetGame} className="restart-btn">
+                Restart Game
+              </button>
             </section>
           </>
         )}
