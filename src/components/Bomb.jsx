@@ -13,16 +13,21 @@ export default function Bomb() {
     questions: [],
     choiches: [],
     status: undefined,
+    timer: 45000,
   });
 
   function handleStart() {
-    console.log("start");
     const firstQuestion = getRandomQuestion(questions, 1, questions.length);
     remainingQuestions = questions.filter(
       (question) => question.id != firstQuestion.id
     );
     setBombState(() => {
-      return { questions: [firstQuestion], choiches: [], status: "running" };
+      return {
+        questions: [firstQuestion],
+        choiches: [],
+        status: "running",
+        timer: 45000,
+      };
     });
   }
 
@@ -72,6 +77,22 @@ export default function Bomb() {
     });
   }
 
+  function handleAddTime() {
+    setBombState((prevState) => {
+      return { ...prevState, timer: prevState.timer + 15000 };
+    });
+  }
+  function handleRemoveTime() {
+    setBombState((prevState) => {
+      return { ...prevState, timer: prevState.timer - 5000 };
+    });
+  }
+  function handleTimerMoving() {
+    setBombState((prevState) => {
+      return { ...prevState, timer: prevState.timer - 1000 };
+    });
+  }
+
   console.log(bombState);
 
   return (
@@ -86,7 +107,7 @@ export default function Bomb() {
               isStarted={bombState.status}
               handleStart={handleStart}
             />
-            <BombTimer />
+            <BombTimer {...bombState} handleTimerMoving={handleTimerMoving} />
             <BombAnswers
               gameStatus={bombState.status}
               answers={
@@ -98,6 +119,8 @@ export default function Bomb() {
                 bombState.questions[bombState.questions.length - 1]
                   ?.correctAnswer
               }
+              addTime={handleAddTime}
+              removeTime={handleRemoveTime}
             />
           </>
         ) : (

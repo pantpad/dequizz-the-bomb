@@ -7,14 +7,14 @@ export default function BombAnswers({
   endGame,
   correctAnswer = undefined,
   gameStatus,
+  addTime,
+  removeTime,
 }) {
   const [answerSelection, setAnswerSelection] = useState({
     isChecking: false,
     checked: false,
-    currentAnswer: undefined,
+    currentAnswer: "",
   });
-
-  console.log(answerSelection);
 
   function handleAnswerSelection(index) {
     setAnswerSelection((prevState) => {
@@ -22,11 +22,12 @@ export default function BombAnswers({
     });
     setTimeout(() => {
       showCorrectAnswer();
+      handlePoints(index);
     }, 1000);
     setTimeout(() => {
       clearState();
       addQuestion(index);
-    }, 1700);
+    }, 1600);
   }
 
   function showCorrectAnswer() {
@@ -37,6 +38,14 @@ export default function BombAnswers({
 
   function clearState() {
     setAnswerSelection({});
+  }
+
+  function handlePoints(currentAnswer) {
+    if (currentAnswer === correctAnswer) {
+      addTime();
+    } else {
+      removeTime();
+    }
   }
 
   function getConditionalClass(index) {
