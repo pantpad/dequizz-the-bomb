@@ -73,7 +73,6 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .bomb > * {
@@ -181,4 +180,16 @@ button.incorrect {
 
 .answers button:hover {
   background-color: #272321;
+}
+
+/* gameover */
+.summary .question {
+}
+
+.summary .question-description {
+}
+
+.summary .question-answers {
+}
+.summary .question-answer {
 }

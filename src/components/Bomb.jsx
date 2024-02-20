@@ -6,18 +6,6 @@ import BombAnswers from "./BombAnswers";
 
 import questions, { getRandomQuestion } from "../utils/questions";
 
-// let currentQuestion = getRandomQuestion(questions);
-// let univoqueQuestions = questions.filter(
-//   (question) => question.id != currentQuestion.id
-// );
-// console.log(univoqueQuestions);
-
-// currentQuestion = getRandomQuestion(questions);
-// univoqueQuestions = univoqueQuestions.filter(
-//   (question) => question.id != currentQuestion.id
-// );
-// console.log(univoqueQuestions);
-
 let remainingQuestions;
 
 export default function Bomb() {
@@ -38,6 +26,7 @@ export default function Bomb() {
   }
 
   function addQuestion() {
+    //go to game over page -> status: 'game over'
     if (remainingQuestions.length == 0) {
       setBombState((prevState) => {
         return { ...prevState, status: undefined };
@@ -58,11 +47,9 @@ export default function Bomb() {
 
     //prettier-ignore
     const nextQuestion = getRandomQuestion(remainingQuestions,1,remainingQuestions.length - 1);
-    if (nextQuestion) {
-      remainingQuestions = remainingQuestions.filter(
-        (question) => question.id != nextQuestion.id
-      );
-    }
+    remainingQuestions = remainingQuestions.filter(
+      (question) => question.id != nextQuestion.id
+    );
 
     setBombState((prevState) => {
       return {
@@ -77,15 +64,34 @@ export default function Bomb() {
   return (
     <>
       <main className="bomb">
-        <BombScreen
-          question={
-            bombState.questions[bombState.questions.length - 1]?.question
-          }
-          isStarted={bombState.status}
-          handleStart={handleStart}
-        />
-        <BombTimer />
-        <BombAnswers addQuestion={addQuestion} />
+        {bombState.status !== "game-over" ? (
+          <>
+            <BombScreen
+              question={
+                bombState.questions[bombState.questions.length - 1]?.question
+              }
+              isStarted={bombState.status}
+              handleStart={handleStart}
+            />
+            <BombTimer />
+            <BombAnswers addQuestion={addQuestion} />
+          </>
+        ) : (
+          <>
+            <h2>You Won / Lost :D :/</h2>
+            <section className="summary">
+              <article className="question">
+                <div className="question-description">aosidhasidu</div>
+                <ul className="question-answers">
+                  <li className="question-answer correct">first</li>
+                  <li className="question-answer your-choice">second</li>
+                  <li className="question-answer">3</li>
+                  <li className="question-answer">4</li>
+                </ul>
+              </article>
+            </section>
+          </>
+        )}
       </main>
     </>
   );
