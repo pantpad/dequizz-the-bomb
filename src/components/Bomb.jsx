@@ -11,6 +11,7 @@ let remainingQuestions;
 export default function Bomb() {
   const [bombState, setBombState] = useState({
     questions: [],
+    choiches: [],
     status: undefined,
   });
 
@@ -21,11 +22,21 @@ export default function Bomb() {
       (question) => question.id != firstQuestion.id
     );
     setBombState(() => {
-      return { questions: [firstQuestion], status: "running" };
+      return { questions: [firstQuestion], choiches: [], status: "running" };
     });
   }
 
-  function addQuestion() {
+  function endGame() {
+    setBombState((prevState) => {
+      return {
+        ...prevState,
+        choiches: [...prevState.choiches, undefined],
+        status: undefined,
+      };
+    });
+  }
+
+  function addQuestion(index) {
     //go to game over page -> status: 'game over'
     if (remainingQuestions.length == 0) {
       setBombState((prevState) => {
@@ -39,6 +50,7 @@ export default function Bomb() {
       setBombState((prevState) => {
         return {
           ...prevState,
+          choiches: [...prevState.choiches, index],
           questions: [...prevState.questions, nextQuestion],
         };
       });
@@ -54,6 +66,7 @@ export default function Bomb() {
     setBombState((prevState) => {
       return {
         ...prevState,
+        choiches: [...prevState.choiches, index],
         questions: [...prevState.questions, nextQuestion],
       };
     });
@@ -74,7 +87,7 @@ export default function Bomb() {
               handleStart={handleStart}
             />
             <BombTimer />
-            <BombAnswers addQuestion={addQuestion} />
+            <BombAnswers addQuestion={addQuestion} endGame={endGame} />
           </>
         ) : (
           <>
@@ -82,12 +95,9 @@ export default function Bomb() {
             <section className="summary">
               <article className="question">
                 <div className="question-description">aosidhasidu</div>
-                <ul className="question-answers">
-                  <li className="question-answer correct">first</li>
-                  <li className="question-answer your-choice">second</li>
-                  <li className="question-answer">3</li>
-                  <li className="question-answer">4</li>
-                </ul>
+                <p className="question-answer correct">correct</p>
+                <p className="question-answer incorrect">incorrect</p>
+                <p className="question-answer skipped">no-answer</p>
               </article>
             </section>
           </>
