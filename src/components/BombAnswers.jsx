@@ -23,11 +23,11 @@ export default function BombAnswers({
     setTimeout(() => {
       showCorrectAnswer();
       handlePoints(index);
-    }, 1000);
+    }, 500);
     setTimeout(() => {
       clearState();
       addQuestion(index);
-    }, 1600);
+    }, 1000);
   }
 
   function showCorrectAnswer() {
@@ -42,9 +42,9 @@ export default function BombAnswers({
 
   function handlePoints(currentAnswer) {
     if (currentAnswer === correctAnswer) {
-      addTime();
+      addTime(15000);
     } else {
-      removeTime();
+      removeTime(5000);
     }
   }
 

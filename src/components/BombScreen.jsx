@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 export default function BombScreen({ question = "", isStarted, handleStart }) {
-  console.log(isStarted);
   return (
     <>
       <div className="question">

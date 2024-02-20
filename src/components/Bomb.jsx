@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import BombTimer from "./BombTimer";
 import BombScreen from "./BombScreen";
@@ -13,8 +13,17 @@ export default function Bomb() {
     questions: [],
     choiches: [],
     status: undefined,
-    timer: 45000,
+    timer: 2000,
   });
+
+  useEffect(() => {
+    if (bombState.timer > 75000) {
+      endGame();
+    }
+    if (bombState.timer < -1) {
+      endGame();
+    }
+  }, [bombState.timer]);
 
   function handleStart() {
     const firstQuestion = getRandomQuestion(questions, 1, questions.length);
@@ -26,7 +35,7 @@ export default function Bomb() {
         questions: [firstQuestion],
         choiches: [],
         status: "running",
-        timer: 45000,
+        timer: 2000,
       };
     });
   }
@@ -43,10 +52,11 @@ export default function Bomb() {
 
   function addQuestion(index) {
     //go to game over page -> status: 'game over'
+    console.log("sono entrato in add");
+    console.log(bombState);
+
     if (remainingQuestions.length == 0) {
-      setBombState((prevState) => {
-        return { ...prevState, status: undefined };
-      });
+      setGameCondition(undefined);
     }
 
     if (remainingQuestions.length == 1) {
@@ -77,23 +87,22 @@ export default function Bomb() {
     });
   }
 
-  function handleAddTime() {
+  function setGameCondition(condition) {
     setBombState((prevState) => {
-      return { ...prevState, timer: prevState.timer + 15000 };
-    });
-  }
-  function handleRemoveTime() {
-    setBombState((prevState) => {
-      return { ...prevState, timer: prevState.timer - 5000 };
-    });
-  }
-  function handleTimerMoving() {
-    setBombState((prevState) => {
-      return { ...prevState, timer: prevState.timer - 1000 };
+      return { ...prevState, status: condition };
     });
   }
 
-  console.log(bombState);
+  function handleAddTime(value) {
+    setBombState((prevState) => {
+      return { ...prevState, timer: prevState.timer + value };
+    });
+  }
+  function handleRemoveTime(value) {
+    setBombState((prevState) => {
+      return { ...prevState, timer: prevState.timer - value };
+    });
+  }
 
   return (
     <>
@@ -107,7 +116,7 @@ export default function Bomb() {
               isStarted={bombState.status}
               handleStart={handleStart}
             />
-            <BombTimer {...bombState} handleTimerMoving={handleTimerMoving} />
+            <BombTimer {...bombState} removeTime={handleRemoveTime} />
             <BombAnswers
               gameStatus={bombState.status}
               answers={

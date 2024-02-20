@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect } from "react";
 
-export default function BombProgress({ timer, max, handleTimerMoving }) {
+export default function BombProgress({ timer, max, removeTime }) {
   useEffect(() => {
     const timerI = setInterval(() => {
-      console.log(timer);
-      handleTimerMoving();
+      removeTime(1000);
     }, 1000);
 
     return () => {
