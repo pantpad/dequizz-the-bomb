@@ -88,12 +88,6 @@ export default function Bomb() {
     });
   }
 
-  function addChoice(index) {
-    setBombState((prevState) => {
-      return { ...prevState, choiches: [...prevState.choiches, index] };
-    });
-  }
-
   function setGameCondition(condition) {
     setBombState((prevState) => {
       return { ...prevState, status: condition };
@@ -143,7 +137,6 @@ export default function Bomb() {
               addTime={handleAddTime}
               removeTime={handleRemoveTime}
               time={bombState.timer}
-              addChoice={addChoice}
             />
           </>
         ) : (
