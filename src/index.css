@@ -199,6 +199,11 @@ body {
   background-color: #272321;
 }
 
+.answers .disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
 /* gameover */
 
 .summary {

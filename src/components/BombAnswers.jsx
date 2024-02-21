@@ -74,7 +74,9 @@ export default function BombAnswers({
         <div className="answers">
           {answers.map((answer, index) => {
             if (gameStatus == undefined) {
-              return <button key={index}></button>;
+              return (
+                <button key={index} disabled className="disabled"></button>
+              );
             }
             return (
               <button
