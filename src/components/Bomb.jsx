@@ -23,9 +23,9 @@ export default function Bomb() {
   useEffect(() => {
     if (bombState.status == "game-over") {
       if (hasWon) {
-        bombExplode.current.src = "./src/assets/bombdefused.mp3";
+        bombExplode.current.src = "./audio/bombdefused.mp3";
       } else {
-        bombExplode.current.src = "./src/assets/bombexplosion.mp3";
+        bombExplode.current.src = "./audio/bombexplosion.mp3";
       }
 
       bombExplode.current.play();

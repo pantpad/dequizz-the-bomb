@@ -5,10 +5,17 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
   const bombTick = useRef();
 
   useEffect(() => {
-    if (timer > 0 || timer < 75000) {
-      play();
-    }
+    play();
   }, []);
+
+  function wait() {
+    setTimeout(play, 1010);
+  }
+
+  function play() {
+    bombTick.current.play();
+    bombTick.current.onEnded = wait();
+  }
 
   useEffect(() => {
     const timerI = setInterval(() => {
@@ -24,20 +31,15 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
     };
   }, [timer, removeTime, endGame]);
 
-  function wait() {
-    setTimeout(play, 1010);
-  }
-
-  function play() {
-    bombTick.current.play();
-    bombTick.current.onEnded = wait();
-  }
-
   return (
     <>
       <progress value={timer} max={max} />
       <p className="time-remaining">{timer / 1000}</p>
-      <audio ref={bombTick} src="./src/assets/singlebombtick.mp3"></audio>
+      <audio
+        ref={bombTick}
+        src="./audio/singlebombtick.mp3"
+        preload="auto"
+      ></audio>
     </>
   );
 }
