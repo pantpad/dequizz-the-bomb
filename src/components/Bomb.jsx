@@ -191,3 +191,4 @@ export default function Bomb() {
 //   shuffledAnswers.current = [...answers];
 // //   shuffledAnswers.current.sort(() => Math.random() - 0.5);
 // }
+//
