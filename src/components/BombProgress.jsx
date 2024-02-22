@@ -8,7 +8,6 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
     }, 1000);
 
     if (timer < 0 || timer >= 75000) {
-      console.log("STOP");
       endGame();
     }
 

@@ -173,26 +173,38 @@ body {
   border-radius: 8px;
   width: 100%;
   min-height: 30px;
+  transition: background-color 150ms linear;
+  animation: pulse 200ms alternate-reverse;
+  animation-iteration-count: 2;
+  animation-play-state: paused;
+}
+
+.answers button.active {
+  animation-play-state: running;
+}
+
+.answers button.stopped {
+  animation-name: none;
 }
 
 .answers button.selected {
   background-color: yellow;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .answers button.selected:hover {
   background-color: yellow;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .answers button.incorrect {
   background-color: red;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .answers button.incorrect:hover {
   background-color: red;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .answers button:hover {
@@ -237,4 +249,16 @@ body {
 
 .summary .question-answer.skipped {
   color: aliceblue;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -9,35 +9,30 @@ export default function BombAnswers({
   addTime,
   removeTime,
 }) {
-  const [answerSelection, setAnswerSelection] = useState({
-    isChecking: false,
-    checked: false,
-    //isCorrect: null,
-    currentAnswer: "",
+  const [answerState, setAnswerState] = useState({
+    selectedAnswer: null,
+    isCorrect: null,
   });
 
   function handleAnswerSelection(index) {
-    setAnswerSelection((prevState) => {
-      return { ...prevState, isChecking: true, currentAnswer: index };
+    setAnswerState({
+      selectedAnswer: index,
+      isCorrect: null,
     });
     setTimeout(() => {
-      showCorrectAnswer();
+      setAnswerState({
+        selectedAnswer: index,
+        isCorrect: correctAnswer === index,
+      });
       handlePoints(index);
+      setTimeout(() => {
+        setAnswerState({
+          selectedAnswer: null,
+          isCorrect: null,
+        });
+        addQuestion(index);
+      }, 500);
     }, 500);
-    setTimeout(() => {
-      clearState();
-      addQuestion(index);
-    }, 1000);
-  }
-
-  function showCorrectAnswer() {
-    setAnswerSelection((prevState) => {
-      return { ...prevState, checked: true };
-    });
-  }
-
-  function clearState() {
-    setAnswerSelection({});
   }
 
   function handlePoints(currentAnswer) {
@@ -48,22 +43,43 @@ export default function BombAnswers({
     }
   }
 
-  function getConditionalClass(index) {
-    let conditionalClass = answerSelection.isChecking
-      ? index === answerSelection.currentAnswer
-        ? !answerSelection.checked
-          ? "selected"
-          : index === correctAnswer
-          ? "selected"
-          : "incorrect"
-        : index === correctAnswer
-        ? answerSelection.checked
-          ? "selected"
-          : null
-        : null
-      : null;
-    return conditionalClass;
+  function getAnswerClass(index) {
+    let answerClass = "";
+    //se il bottone selezionato e' selezionato
+    if (index === answerState.selectedAnswer) {
+      if (answerState.selectedAnswer !== null) {
+        answerClass = "selected";
+        //se il bottone selezionato e' corretto o sbagliato
+        if (answerState.isCorrect !== null) {
+          answerClass = answerState.isCorrect
+            ? "selected active"
+            : "incorrect active";
+        }
+      }
+    }
+    //vai sul bottone della risposta corretta e selezionala se si e' gia' stabilita la correttezza
+    if (index === correctAnswer && answerState.isCorrect !== null) {
+      answerClass = "selected active";
+    }
+    return answerClass;
   }
+
+  // function getConditionalClass(index) {
+  //   let conditionalClass = answerSelection.isChecking
+  //     ? index === answerSelection.currentAnswer
+  //       ? !answerSelection.checked
+  //         ? "selected"
+  //         : index === correctAnswer
+  //         ? "selected"
+  //         : "incorrect"
+  //       : index === correctAnswer
+  //       ? answerSelection.checked
+  //         ? "selected"
+  //         : null
+  //       : null
+  //     : null;
+  //   return conditionalClass;
+  // }
 
   //controllo se ho selezionato
   //se ho selezionato qualcosa, in base all'indice selezionato -> coloro giallo
@@ -81,11 +97,14 @@ export default function BombAnswers({
             }
             return (
               <button
-                className={getConditionalClass(index)}
-                disabled={answerSelection.isChecking}
+                className={getAnswerClass(index)}
+                disabled={answerState.selectedAnswer}
                 key={index}
                 onClick={() => {
                   handleAnswerSelection(index);
+                }}
+                onAnimationIteration={(e) => {
+                  e.target.classList.toggle("stopped");
                 }}
               >
                 {answer}
@@ -97,6 +116,13 @@ export default function BombAnswers({
     </>
   );
 }
+
+// modify the state so that it only has 2 properties
+// 1 - selectedAnswer -> index of selectedAnswer or TEXT of selectedAnswer
+// 2 - isCorrect -> boolean indicating if the selectedAnswer is correct or not
+// when answer is selected -> modify the state indicating selectedAnswer = [index || text] + don't touch isCorrect
+// instantly set a timeout that will modify the state by ALSO setting the isCorrect property -> check if selected == correctAnswer
+// inside the same timeout SET another timetout that will execute the steps necessary to go into the next question
 
 // import { useState } from 'react';
 // import QuestionTimer from './QuestionTimer.jsx';

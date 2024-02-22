@@ -72,7 +72,6 @@ export default function Bomb() {
     );
 
     setBombState((prevState) => {
-      console.log(prevState.timer);
       if (prevState.timer >= 75000 || prevState.timer <= 0) {
         return {
           ...prevState,
@@ -104,8 +103,6 @@ export default function Bomb() {
       return { ...prevState, timer: prevState.timer - value };
     });
   }, []);
-
-  console.log(bombState);
 
   return (
     <>
