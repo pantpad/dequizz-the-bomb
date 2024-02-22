@@ -64,27 +64,6 @@ export default function BombAnswers({
     return answerClass;
   }
 
-  // function getConditionalClass(index) {
-  //   let conditionalClass = answerSelection.isChecking
-  //     ? index === answerSelection.currentAnswer
-  //       ? !answerSelection.checked
-  //         ? "selected"
-  //         : index === correctAnswer
-  //         ? "selected"
-  //         : "incorrect"
-  //       : index === correctAnswer
-  //       ? answerSelection.checked
-  //         ? "selected"
-  //         : null
-  //       : null
-  //     : null;
-  //   return conditionalClass;
-  // }
-
-  //controllo se ho selezionato
-  //se ho selezionato qualcosa, in base all'indice selezionato -> coloro giallo
-  //dopo 100ms mostra la risposta corretta -> metto un setTimeout che cambia lo stato con un altro parametro e cambia il className?
-
   return (
     <>
       <section className="answers-wrapper">
@@ -116,13 +95,6 @@ export default function BombAnswers({
     </>
   );
 }
-
-// modify the state so that it only has 2 properties
-// 1 - selectedAnswer -> index of selectedAnswer or TEXT of selectedAnswer
-// 2 - isCorrect -> boolean indicating if the selectedAnswer is correct or not
-// when answer is selected -> modify the state indicating selectedAnswer = [index || text] + don't touch isCorrect
-// instantly set a timeout that will modify the state by ALSO setting the isCorrect property -> check if selected == correctAnswer
-// inside the same timeout SET another timetout that will execute the steps necessary to go into the next question
 
 // import { useState } from 'react';
 // import QuestionTimer from './QuestionTimer.jsx';
