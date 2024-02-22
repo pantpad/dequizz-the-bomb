@@ -77,7 +77,7 @@ export default function BombAnswers({
             return (
               <button
                 className={getAnswerClass(index)}
-                disabled={answerState.selectedAnswer}
+                disabled={answerState.selectedAnswer !== null}
                 key={index}
                 onClick={() => {
                   handleAnswerSelection(index);
