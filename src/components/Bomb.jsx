@@ -176,7 +176,7 @@ export default function Bomb() {
               <button onClick={resetGame} className="restart-btn">
                 Restart Game
               </button>
-              <audio ref={bombExplode}></audio>
+              <audio ref={bombExplode} preload="metadata"></audio>
             </section>
           </>
         )}

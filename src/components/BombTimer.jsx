@@ -7,8 +7,8 @@ const maxTime = 75000;
 export default function BombTimer({ status, timer, removeTime, endGame }) {
   let timerSection = (
     <>
-      <progress value={60} max={100} />
-      <p className="time-remaining">45</p>
+      <progress value={56} max={100} />
+      <p className="time-remaining">40</p>
     </>
   );
 
