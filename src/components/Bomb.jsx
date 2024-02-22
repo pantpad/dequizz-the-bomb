@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import BombTimer from "./BombTimer";
 import BombScreen from "./BombScreen";
@@ -12,13 +12,25 @@ const startingState = {
   questions: [],
   choiches: [],
   status: undefined,
-  timer: 45000,
+  timer: 40000,
 };
 
 export default function Bomb() {
   const [bombState, setBombState] = useState(startingState);
-
+  const bombExplode = useRef();
   const hasWon = bombState.timer >= 75000 ? true : false;
+
+  useEffect(() => {
+    if (bombState.status == "game-over") {
+      if (hasWon) {
+        bombExplode.current.src = "./src/assets/bombdefused.mp3";
+      } else {
+        bombExplode.current.src = "./src/assets/bombexplosion.mp3";
+      }
+
+      bombExplode.current.play();
+    }
+  }, [bombState.status, hasWon]);
 
   function handleStart() {
     const firstQuestion = getRandomQuestion(questions, 1, questions.length);
@@ -164,6 +176,7 @@ export default function Bomb() {
               <button onClick={resetGame} className="restart-btn">
                 Restart Game
               </button>
+              <audio ref={bombExplode}></audio>
             </section>
           </>
         )}
