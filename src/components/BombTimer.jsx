@@ -17,7 +17,6 @@ export default function BombTimer() {
     }
 
     return () => {
-      console.log("aa");
       clearInterval(timerI);
     };
   }, [status, handleRemoveTime]);
