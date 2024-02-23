@@ -8,14 +8,8 @@ export default function BombAnswers() {
     isCorrect: null,
   });
 
-  const {
-    status,
-    lastQuestionAnswers,
-    lastQuestionCorrectAnswer,
-    addQuestion,
-    handleAddTime,
-    handleRemoveTime,
-  } = useContext(BombContext);
+  const { status, lastQuestion, addQuestion, handleAddTime, handleRemoveTime } =
+    useContext(BombContext);
 
   function handleAnswerSelection(index) {
     setAnswerState({
@@ -25,7 +19,7 @@ export default function BombAnswers() {
     setTimeout(() => {
       setAnswerState({
         selectedAnswer: index,
-        isCorrect: lastQuestionCorrectAnswer === index,
+        isCorrect: lastQuestion.correctAnswer === index,
       });
       handlePoints(index);
       setTimeout(() => {
@@ -39,7 +33,7 @@ export default function BombAnswers() {
   }
 
   function handlePoints(currentAnswer) {
-    if (currentAnswer === lastQuestionCorrectAnswer) {
+    if (currentAnswer === lastQuestion.correctAnswer) {
       handleAddTime(15000);
     } else {
       handleRemoveTime(5000);
@@ -61,7 +55,10 @@ export default function BombAnswers() {
       }
     }
     //vai sul bottone della risposta corretta e selezionala se si e' gia' stabilita la correttezza
-    if (index === lastQuestionCorrectAnswer && answerState.isCorrect !== null) {
+    if (
+      index === lastQuestion.correctAnswer &&
+      answerState.isCorrect !== null
+    ) {
       answerClass = "selected active";
     }
     return answerClass;
@@ -71,7 +68,7 @@ export default function BombAnswers() {
     <>
       <section className="answers-wrapper">
         <div className="answers">
-          {lastQuestionAnswers.map((answer, index) => {
+          {lastQuestion.answers.map((answer, index) => {
             if (status == undefined) {
               return (
                 <button key={index} disabled className="disabled"></button>
