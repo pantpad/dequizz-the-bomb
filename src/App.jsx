@@ -1,10 +1,12 @@
 import Bomb from "./components/Bomb";
-
+import BombContextProvider from "./store/bomb-context";
 function App() {
   return (
     <>
       <h2 className="title">7355608</h2>
-      <Bomb></Bomb>
+      <BombContextProvider>
+        <Bomb></Bomb>
+      </BombContextProvider>
     </>
   );
 }

@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { BombContext } from "../store/bomb-context";
 
 /* eslint-disable react/prop-types */
-export default function BombAnswers({
-  answers = ["", "", "", ""],
-  addQuestion,
-  correctAnswer = undefined,
-  gameStatus,
-  addTime,
-  removeTime,
-}) {
+export default function BombAnswers() {
   const [answerState, setAnswerState] = useState({
     selectedAnswer: null,
     isCorrect: null,
   });
+
+  const {
+    status,
+    lastQuestionAnswers,
+    lastQuestionCorrectAnswer,
+    addQuestion,
+    handleAddTime,
+    handleRemoveTime,
+  } = useContext(BombContext);
 
   function handleAnswerSelection(index) {
     setAnswerState({
@@ -22,7 +25,7 @@ export default function BombAnswers({
     setTimeout(() => {
       setAnswerState({
         selectedAnswer: index,
-        isCorrect: correctAnswer === index,
+        isCorrect: lastQuestionCorrectAnswer === index,
       });
       handlePoints(index);
       setTimeout(() => {
@@ -36,10 +39,10 @@ export default function BombAnswers({
   }
 
   function handlePoints(currentAnswer) {
-    if (currentAnswer === correctAnswer) {
-      addTime(15000);
+    if (currentAnswer === lastQuestionCorrectAnswer) {
+      handleAddTime(15000);
     } else {
-      removeTime(5000);
+      handleRemoveTime(5000);
     }
   }
 
@@ -58,7 +61,7 @@ export default function BombAnswers({
       }
     }
     //vai sul bottone della risposta corretta e selezionala se si e' gia' stabilita la correttezza
-    if (index === correctAnswer && answerState.isCorrect !== null) {
+    if (index === lastQuestionCorrectAnswer && answerState.isCorrect !== null) {
       answerClass = "selected active";
     }
     return answerClass;
@@ -68,8 +71,8 @@ export default function BombAnswers({
     <>
       <section className="answers-wrapper">
         <div className="answers">
-          {answers.map((answer, index) => {
-            if (gameStatus == undefined) {
+          {lastQuestionAnswers.map((answer, index) => {
+            if (status == undefined) {
               return (
                 <button key={index} disabled className="disabled"></button>
               );

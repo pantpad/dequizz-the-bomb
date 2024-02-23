@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
-export default function BombScreen({ question = "", isStarted, handleStart }) {
+
+import { useContext } from "react";
+import { BombContext } from "../store/bomb-context";
+
+export default function BombScreen() {
+  const { lastQuestionText, status, startGame } = useContext(BombContext);
   return (
     <>
       <div className="question">
-        {isStarted ? (
-          <p>{question}</p>
+        {status ? (
+          <p>{lastQuestionText}</p>
         ) : (
-          <div className="initial-screen" onClick={handleStart}>
+          <div className="initial-screen" onClick={startGame}>
             <h2>DEQUIZZ</h2>
             <p>the</p>
             <h2>BOMB</h2>

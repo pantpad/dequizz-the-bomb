@@ -2,9 +2,7 @@
 
 import BombProgress from "./BombProgress";
 
-const maxTime = 75000;
-
-export default function BombTimer({ status, timer, removeTime, endGame }) {
+export default function BombTimer({ status }) {
   let timerSection = (
     <>
       <progress value={56} max={100} />
@@ -13,14 +11,7 @@ export default function BombTimer({ status, timer, removeTime, endGame }) {
   );
 
   if (status == "running") {
-    timerSection = (
-      <BombProgress
-        timer={timer}
-        max={maxTime}
-        removeTime={removeTime}
-        endGame={endGame}
-      />
-    );
+    timerSection = <BombProgress />;
   }
 
   return (

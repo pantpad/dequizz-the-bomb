@@ -1,19 +1,21 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useRef } from "react";
+import { useEffect, useContext, useRef } from "react";
+import { BombContext } from "../store/bomb-context";
 
-export default function BombProgress({ timer, max, removeTime, endGame }) {
+export default function BombProgress() {
+  const { timer, maxTimer, handleRemoveTime, endGame } =
+    useContext(BombContext);
   const bombTick = useRef();
 
   useEffect(() => {
     const timerI = setInterval(() => {
-      removeTime(1000);
+      handleRemoveTime(1000);
     }, 1000);
 
     return () => {
-      console.log("unmount");
       clearInterval(timerI);
     };
-  }, [removeTime]);
+  }, [handleRemoveTime]);
 
   useEffect(() => {
     bombTick.current.play();
@@ -24,7 +26,7 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
 
   return (
     <>
-      <progress value={timer} max={max} />
+      <progress value={timer} max={maxTimer} />
       <p className="time-remaining">{timer / 1000}</p>
       <audio
         ref={bombTick}

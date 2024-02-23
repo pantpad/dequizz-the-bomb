@@ -1,5 +1,11 @@
 /* eslint-disable react/prop-types */
-export default function Question({ question, choiches, index }) {
+
+import { useContext } from "react";
+import { BombContext } from "../store/bomb-context";
+
+export default function Question({ question, index }) {
+  const { choiches } = useContext(BombContext);
+
   return (
     <>
       <article className="question">
