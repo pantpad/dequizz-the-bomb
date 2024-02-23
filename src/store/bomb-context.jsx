@@ -27,9 +27,9 @@ const BombContext = createContext({
   timer: undefined,
   maxTimer: undefined,
   lastQuestion: {},
-  lastQuestionAnswers: [],
-  lastQuestionCorrectAnswer: undefined,
-  lastQuestionText: "",
+  lastQuestionAnswers: [], //tirare fuori
+  lastQuestionCorrectAnswer: undefined, //tirare fuori
+  lastQuestionText: "", //tirare fuori
   startGame: () => {},
   endGame: () => {},
   resetGame: () => {},
