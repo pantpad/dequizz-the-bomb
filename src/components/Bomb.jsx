@@ -15,7 +15,7 @@ export default function Bomb() {
         {status !== "game-over" ? (
           <>
             <BombScreen />
-            <BombTimer status={status} />
+            <BombTimer />
             <BombAnswers />
           </>
         ) : (
