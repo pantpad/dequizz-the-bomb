@@ -26,7 +26,11 @@ export default function BombProgress({ timer, max, removeTime, endGame }) {
     <>
       <progress value={timer} max={max} />
       <p className="time-remaining">{timer / 1000}</p>
-      <audio ref={bombTick} src="./audio/singlebombtick.mp3"></audio>
+      <audio
+        ref={bombTick}
+        src="./audio/singlebombtick.mp3"
+        preload="metadata"
+      ></audio>
     </>
   );
 }
